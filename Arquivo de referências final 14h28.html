@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Referências Bibliográficas - Prevenção e Manejo da Bronquiolite</title>
+    <style>
+        :root {
+            --primary-color: #0f766e;
+            --primary-dark: #115e59;
+            --primary-light: #ccfbf1;
+            --secondary-color: #2563eb;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --bg-main: #f8fafc;
+            --bg-card: #ffffff;
+            --border-color: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+            --radius: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding-bottom: 60px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* Painel de Controle e Busca */
+        .controls {
+            background: var(--bg-card);
+            padding: 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color);
+        }
+
+        .search-box {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .search-box input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            background: #f1f5f9;
+            border: none;
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            border-radius: 20px;
+            cursor: pointer;
+            color: var(--text-muted);
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .tab:hover {
+            background: #e2e8f0;
+            color: var(--text-main);
+        }
+
+        .tab.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Contador de Resultados */
+        .results-count {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        /* Grid de Referências */
+        .references-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .ref-card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 24px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ref-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.05), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+        }
+
+        .ref-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background-color: var(--secondary-color);
+        }
+
+        .ref-tags {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-epi { background-color: #e0f2fe; color: #0369a1; }
+        .badge-aidpi { background-color: #fef3c7; color: #b45309; }
+        .badge-triagem { background-color: #f3e8ff; color: #6b21a8; }
+        .badge-link { background-color: #dbeafe; color: #1d4ed8; }
+
+        .ref-citation {
+            font-size: 1.05rem;
+            color: var(--text-main);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .ref-citation em, .ref-citation i {
+            font-style: italic;
+            font-weight: 600;
+        }
+
+        .ref-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-radius: 6px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #1d4ed8;
+        }
+
+        .btn-secondary {
+            background-color: #f1f5f9;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: #e2e8f0;
+        }
+
+        /* Notificação de Cópia */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #334155;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3);
+            display: none;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: 50px;
+        }
+
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.8rem; }
+            .filter-tabs { flex-direction: column; }
+            .tab { text-align: center; width: 100%; }
+            .ref-actions { width: 100%; }
+            .btn { width: 100%; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Referências Bibliográficas</h1>
+        <p>Prevenção e manejo da bronquiolite aguda, diretrizes de assistência e triagem neonatal.</p>
+    </header>
+
+    <div class="container">
+        
+        <!-- Controles Interativos -->
+        <div class="controls">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Pesquisar por autor, título, palavra-chave ou ano...">
+            </div>
+            <div class="filter-tabs">
+                <button class="tab active" onclick="filterCategory('all', this)">Todas</button>
+                <button class="tab" onclick="filterCategory('epi', this)">Epidemiologia e Internações</button>
+                <button class="tab" onclick="filterCategory('aidpi', this)">Diretrizes e Manuais AIDPI</button>
+                <button class="tab" onclick="filterCategory('triagem', this)">Triagem e Diagnóstico Neonatal</button>
+            </div>
+        </div>
+
+        <div class="results-count" id="resultsCount">Exibindo 9 referências</div>
+
+        <!-- Lista de Referências -->
+        <div class="references-list" id="referencesList">
+            
+            <!-- Ref 1 -->
+            <div class="ref-card" data-category="epi" data-text="barbosa mariana siqueira perfil epidemiologico taxa de mortalidade pacientes bronquite bronquiolite aguda analise 2020 a 2025 i congresso nordestino de pneumologia e radiologia do torax isbn 978-65-5465-162-2">
+                <div class="ref-tags">
+                    <span class="badge badge-epi">Epidemiologia</span>
+                    <span class="badge badge-link">Link Disponível</span>
+                </div>
+                <div class="ref-citation" id="citation-1">
+                    BARBOSA, Mariana Siqueira et al. Perfil epidemiológico da taxa de mortalidade dos pacientes com bronquite e bronquiolite aguda: uma análise de 2020 a 2025. In: <strong>I CONGRESSO NORDESTINO DE PNEUMOLOGIA E RADIOLOGIA DO TÓRAX</strong>, 2025. <em>Anais [...]</em>. 2025. ISBN: 978-65-5465-162-2. Disponível em: <a href="https://bjihs.emnuvens.com.br/bjihs/article/view/2565" target="_blank">https://bjihs.emnuvens.com.br/bjihs/article/view/2565</a>. Acesso em: 18 mai. 2026.
+                </div>
+                <div class="ref-actions">
+                    <a href="https://bjihs.emnuvens.com.br/bjihs/article/view/2565" target="_blank" class="btn btn-primary">Acessar Link</a>
+                    <button class="btn btn-secondary" onclick="copyCitation('citation-1')">Copiar Referência</button>
+                </div>
+            </div>
+
+            <!-- Ref 2 -->
+            <div class="ref-card" data-category="aidpi" data-text="brasil ministerio da saude aidpi atencao integrada as doencas prevalentes na infancia curso de capacitacao introducao modulo 1 organizacao mundial da saude organizacao pan americana da saude 2002">
+                <div class="ref-tags">
+                    <span class="badge badge-aidpi">AIDPI</span>
+                    <span class="badge badge-link">PDF Disponível</span>
+                </div>
+                <div class="ref-citation" id="citation-2">
+                    BRASIL. Ministério da Saúde. <strong>AIDPI Atenção Integrada às Doenças Prevalentes na Infância</strong>: curso de capacitação: introdução: módulo 1. Organização Mundial da Saúde, Organização Pan-Americana da Saúde. 2. ed. rev. Brasília: Ministério da Saúde, 2002. Disponível em: <a href="https://bvsms.saude.gov.br/bvs/publicacoes/AIDPI_modulo_1.pdf" target="_blank">https://bvsms.saude.gov.br/bvs/publicacoes/AIDPI_modulo_1.pdf</a>. Acesso em: 18 mai. 2026.
+                </div>
+                <div class="ref-actions">
+                    <a href="https://bvsms.saude.gov.br/bvs/publicacoes/AIDPI_modulo_1.pdf" target="_blank" class="btn btn-primary">Acessar PDF</a>
+                    <button class="btn btn-secondary" onclick="copyCitation('citation-2')">Copiar Referência</button>
+                </div>
+            </div>
+
+            <!-- Ref 3 -->
+            <div class="ref-card" data-category="epi" data-text="brasil ministerio da saude datasus sistema de informacoes hospitalares do sus sih sus tabnet 2026">
+                <div class="ref-tags">
+                    <span class="badge badge-epi">Epidemiologia</span>
+                    <span class="badge badge-link">Link Disponível</span>
+                </div>
+                <div class="ref-citation" id="citation-3">
+                    BRASIL. Ministério da Saúde. DATASUS. Sistema de Informações Hospitalares do SUS (SIH/SUS). Disponível em: <a href="https://datasus.saude.gov.br/informacoes-de-saude-tabnet/" target="_blank">https://datasus.saude.gov.br/informacoes-de-saude-tabnet/</a>. Acesso em: 18 mai. 2026.
+                </div>
+                <div class="ref-actions">
+                    <a href="https://datasus.saude.gov.br/informacoes-de-saude-tabnet/" target="_blank" class="btn btn-primary">Acessar Link</a>
+                    <button class="btn btn-secondary" onclick="copyCitation('citation-3')">Copiar Referência</button>
+                </div>
+            </div>
+
+            <!-- Ref 4 -->
+            <div class="ref-card" data-category="aidpi" data-text="brasil ministerio da saude manual aidpi crianca 2 meses a 5 anos recurso eletronico brasilia 2017">
+                <div class="ref-tags">
+                    <span class="badge badge-aidpi">AIDPI</span>
+                    <span class="badge badge-link">PDF Disponível</span>
+                </div>
+                <div class="ref-citation" id="citation-4">
+                    BRASIL. Ministério da Saúde. <strong>Manual Aidpi Criança: 2 meses a 5 anos</strong> [recurso eletrônico]. Brasília: Ministério da Saúde, 2017. Disponível em: <a href="https://bvsms.saude.gov.br/bvs/publicacoes/manual_quadros_procedimentos_aidpi_crianca_2meses_5anos.pdf" target="_blank">https://bvsms.saude.gov.br/bvs/publicacoes/manual_quadros_procedimentos_aidpi_crianca_2meses_5anos.pdf</a>. Acesso em: 18 mai. 2026.
+                </div>
+                <div class="ref-actions">
+                    <a href="https://bvsms.saude.gov.br/bvs/publicacoes/manual_quadros_procedimentos_aidpi_crianca_2meses_5anos.pdf" target="_blank" class="btn btn-primary">Acessar PDF</a>
+                    <button class="btn btn-secondary" onclick="copyCitation('citation-4')">Copiar Referência</button>
+                </div>
+            </div>
+
+            <!-- Ref 5 -->
+            <div class="ref-card" data-category="aidpi" data-text="brasil ministerio da saude manual aidpi neonatal 5 ed brasilia bvsms pdf 2013 2026">
+                <div class="ref-tags">
+                    <span class="badge badge-aidpi">AIDPI</span>
+                    <span class="badge badge-link">PDF Disponível</span>
+                </div>
+                <div class="ref-citation" id="citation-5">
+                    BRASIL. Ministério da Saúde. <strong>Manual AIDPI neonatal</strong>. 5. ed. Brasília: Ministério da Saúde, 2013. Disponível em: <a href="https://bvsms.saude.gov.br/bvs/publicacoes/manual_AIDPI_neonatal_5ed.pdf" target="_blank">https://bvsms.saude.gov.br/bvs/publicacoes/manual_AIDPI_neonatal_5ed.pdf</a>. Acesso em: 18 mai. 2026.
+                </div>
+                <div class="ref-actions">
+                    <a href="https://bvsms.saude.gov.br/bvs/publicacoes/manual_AIDPI_neonatal_5ed.pdf" target="_blank" class="btn btn-primary">Acessar PDF</a>
+                    <button class="btn btn-secondary" onclick="copyCitation('citation-5')">Copiar Referência</button>
+                </div>
+            </div>
+
+            <!-- Ref 6 -->
+            <div class="ref-card" data-category="triagem" data-text="brasil ministerio da saude secretaria de atencao a saude departamento de atencao especializada e tematica triagem neonatal biologica manual tecnico brasilia 2016">
+                <div class="ref-tags">
+                    <span class="badge badge-triagem">Triagem</span>
+                    <span class="badge badge-link">PDF Disponível</span>
+                </div>
+                <div class="ref-citation" id="citation-6">
+                    BRASIL. Ministério da Saúde. Secretaria de Atenção à Saúde. Departamento de Atenção Especializada e Temática. <strong>Triagem neonatal biológica: manual técnico</strong>. Brasília: Ministério da Saúde, 2016. Disponível em: <a href="https://bvsms.saude.gov.br/bvs/publicacoes/triagem_neonatal_biologica_manual_tecnico.pdf" target="_blank">https://bvsms.saude.gov.br/bvs/publicacoes/triagem_neonatal_biologica_manual_tecnico.pdf</a>. Acesso em: 18 mai. 2026.
+                </div>
+                <div class="ref-actions">
+                    <a href="https://bvsms.saude.gov.br/bvs/publicacoes/triagem_neonatal_biologica_manual_tecnico.pdf" target="_blank" class="btn btn-primary">Acessar PDF</a>
+                    <button class="btn btn-secondary" onclick="copyCitation('citation-6')">Copiar Referência</button>
+                </div>
+            </div>
+
+            <!-- Ref 7 -->
+            <div class="ref-card" data-category="triagem" data-text="brasil ministerio da saude teste da linguinha avaliacao do frenulo lingual em recem nascidos pode detectar anquiloglossia brasilia aps saude noticia 2021 2023">
+                <div class="ref-tags">
+                    <span class="badge badge-triagem">Triagem</span>
+                    <span class="badge badge-link">Link Disponível</span>
+                </div>
+                <div class="ref-citation" id="citation-7">
+                    BRASIL. Ministério da Saúde. Teste da linguinha: avaliação do frênulo lingual em recém-nascidos pode detectar anquiloglossia. Brasília, 2021. Disponível em: <a href="https://www.gov.br/saude/pt-br/assuntos/noticias/2021/junho/teste-da-linguinha-avaliacao-do-frenulo-lingual-em-recem-nascidos-pode-detectar-a-anquiloglossia" target="_blank">https://www.gov.br/saude/pt-br/assuntos/noticias/2021/junho/teste-da-linguinha-avaliacao-do-frenulo-lingual-em-recem-nascidos-pode-detectar-a-anquiloglossia</a>. Acesso em: 25 jul. 2023.
+                </div>
+                <div class="ref-actions">
+                    <a href="https://www.gov.br/saude/pt-br/assuntos/noticias/2021/junho/teste-da-linguinha-avaliacao-do-frenulo-lingual-em-recem-nascidos-pode-detectar-a-anquiloglossia" target="_blank" class="btn btn-primary">Acessar Link</a>
+                    <button class="btn btn-secondary" onclick="copyCitation('citation-7')">Copiar Referência</button>
+                </div>
+            </div>
+
+            <!-- Ref 8 -->
+            <div class="ref-card" data-category="aidpi" data-text="leite manuella silva andrade aglae da silva araujo lima ligia maria dolce de aidpi conhecimento dos enfermeiros da atencao basica do municipio de aracaju se revista mineira de enfermagem 2011">
+                <div class="ref-tags">
+                    <span class="badge badge-aidpi">AIDPI</span>
+                    <span class="badge badge-link">Link Disponível</span>
+                </div>
+                <div class="ref-citation" id="citation-8">
+                    LEITE, Manuella Silva; ANDRADE, Aglaé da Silva Araújo; LIMA, Lígia Maria Dolce de. AIDPI: conhecimento dos enfermeiros da atenção básica do município de Aracaju-Se. <em>Revista Mineira de Enfermagem</em>, v. 15, n. 4, p. 481-490, out./dez. 2011. Disponível em: <a href="https://periodicos.ufmg.br/index.php/reme/article/view/50347" target="_blank">https://periodicos.ufmg.br/index.php/reme/article/view/50347</a>. Acesso em: 18 mai. 2026.
+                </div>
+                <div class="ref-actions">
+                    <a href="https://periodicos.ufmg.br/index.php/reme/article/view/50347" target="_blank" class="btn btn-primary">Acessar Link</a>
+                    <button class="btn btn-secondary" onclick="copyCitation('citation-8')">Copiar Referência</button>
+                </div>
+            </div>
+
+            <!-- Ref 9 -->
+            <div class="ref-card" data-category="epi" data-text="sa lais lobo coimbra braandao estudo da incidence das internacoes da bronquiolite viral aguda criancas de zero a 14 anos alagoas 2019 a 2024 viii congresso academico de medicina cesmac maceio doity 486031 2025 2026">
+                <div class="ref-tags">
+                    <span class="badge badge-epi">Epidemiologia</span>
+                    <span class="badge badge-link">Link Disponível</span>
+                </div>
+                <div class="ref-citation" id="citation-9">
+                    SÁ, Laís Lobo Coimbra Brandão et al. Estudo da incidência das internações da bronquiolite viral aguda em crianças de zero a 14 anos, no estado de Alagoas, nos anos de 2019 a 2024. In: <strong>VIII CONGRESSO ACADÊMICO DE MEDICINA CESMAC</strong>, 2025, Maceió. <em>Anais [...]</em>. Maceió: Centro Universitário Cesmac, 2025. Disponível em: <a href="https://doity.com.br/anais/congressoacademicomedicinacesmac/trabalho/486031" target="_blank">https://doity.com.br/anais/congressoacademicomedicinacesmac/trabalho/486031</a>. Acesso em: 18 mai. 2026.
+                </div>
+                <div class="ref-actions">
+                    <a href="https://doity.com.br/anais/congressoacademicomedicinacesmac/trabalho/486031" target="_blank" class="btn btn-primary">Acessar Link</a>
+                    <button class="btn btn-secondary" onclick="copyCitation('citation-9')">Copiar Referência</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="toast" id="toast">Citação copiada para a área de transferência!</div>
+
+    <footer>
+        <p>&copy; 2026 - Catálogo Digital de Referências Técnicas e Acadêmicas.</p>
+    </footer>
+
+    <script>
+        let currentCategory = 'all';
+
+        function filterCategory(category, element) {
+            currentCategory = category;
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            element.classList.add('active');
+            applyFilter();
+        }
+
+        function applyFilter() {
+            const searchQuery = document.getElementById('searchInput').value.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, "");
+            const cards = document.querySelectorAll('.ref-card');
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const categoryMatch = (currentCategory === 'all' || card.getAttribute('data-category') === currentCategory);
+                const text = card.getAttribute('data-text');
+                const searchMatch = text.includes(searchQuery);
+
+                if (categoryMatch && searchMatch) {
+                    card.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            document.getElementById('resultsCount').innerText = `Exibindo ${visibleCount} referência${visibleCount !== 1 ? 's' : ''}`;
+        }
+
+        document.getElementById('searchInput').addEventListener('input', applyFilter);
+
+        function copyCitation(id) {
+            const element = document.getElementById(id);
+            const text = element.innerText;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                const toast = document.getElementById('toast');
+                toast.style.display = 'block';
+                setTimeout(() => {
+                    toast.style.display = 'none';
+                }, 2500);
+            }).catch(err => {
+                console.error('Erro ao copiar: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
